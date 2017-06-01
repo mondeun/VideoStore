@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\CustomerException.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Interfaces\IRentals.cs" />

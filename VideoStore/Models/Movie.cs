@@ -2,6 +2,8 @@
 {
     public class Movie
     {
-        public string Title { get; private set; }
+        public string Title { get; set; }
+        public int Year { get; set; }
+        public Genre Genre { get; set; }
     }
 }
