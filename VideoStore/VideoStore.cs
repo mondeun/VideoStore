@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using VideoStore.Exceptions;
@@ -12,13 +11,13 @@ namespace VideoStore
     {
         private readonly IRentals _rentals;
         private readonly List<Customer> _customers;
-        private readonly List<Movie> _movies;
+        private readonly Dictionary<string, List<Movie>> _movies;
 
         public VideoStore(IRentals rentals)
         {
             _rentals = rentals;
             _customers = new List<Customer>();
-            _movies = new List<Movie>();
+            _movies = new Dictionary<string, List<Movie>>();
         }
 
         /// <summary>
@@ -49,10 +48,17 @@ namespace VideoStore
             if (string.IsNullOrEmpty(movie.Title))
                 throw new MovieException("Movie title is empty");
 
-            if (_movies.Count(x => x.Title.Equals(movie.Title)) >= 3)
-                throw new MovieException("Cannot add more than three of the same movie");
+            if (_movies.ContainsKey(movie.Title))
+            {
+                if (_movies[movie.Title].Count(x => x.Title.Equals(movie.Title)) >= 3)
+                    throw new MovieException("Cannot add more than three of the same movie");
 
-            _movies.Add(movie);
+                _movies[movie.Title].Add(movie);
+            }
+            else
+            {
+                _movies[movie.Title] = new List<Movie> {movie};
+            }
         }
 
         /// <summary>
@@ -98,7 +104,7 @@ namespace VideoStore
         /// <returns></returns>
         public List<Movie> GetMovies()
         {
-            return _movies;
+            return _movies.SelectMany(x => x.Value).ToList();
         }
 
         private static void VerifySocialSecurityNumberFormat(string socialSecurityNumber)
