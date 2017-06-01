@@ -23,11 +23,16 @@ namespace VideoStoreUI
 
                 switch (menuChoice?.ToLower())
                 {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
                     case "q":
                         quit = true;
-                        break;
-                    default:
-                        Console.WriteLine($"{menuChoice} is not a valid alternative\n");
                         break;
                 }
                 Console.ReadLine();
