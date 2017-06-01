@@ -34,13 +34,22 @@ namespace VideoStore
 
         public void AddMovie(Movie movie)
         {
+            if(string.IsNullOrEmpty(movie.Title))
+                throw new MovieException("Movie title is empty");
         }
 
         public void RentMovie(string movieTitle, string socialSecurityNumber)
         {
+            if (string.IsNullOrEmpty(movieTitle))
+                throw new MovieException("Movie title is empty");
+
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
         }
 
+        /// <summary>
+        /// Get all customers
+        /// </summary>
+        /// <returns>All registered customers</returns>
         public List<Customer> GetCustomers()
         {
             return _customers;
@@ -48,6 +57,9 @@ namespace VideoStore
 
         public void ReturnMovie(string movieTitle, string socialSecurityNumber)
         {
+            if (string.IsNullOrEmpty(movieTitle))
+                throw new MovieException("Movie title is empty");
+
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
         }
 

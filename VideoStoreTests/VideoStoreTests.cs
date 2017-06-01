@@ -1,8 +1,10 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using NUnit.Framework;
 using VideoStore;
 using VideoStore.Exceptions;
 using VideoStore.Interfaces;
+using VideoStore.Models;
 
 namespace VideoStoreTests
 {
@@ -19,7 +21,7 @@ namespace VideoStoreTests
             _sut = new VideoStore.VideoStore(_rentals);
         }
 
-        #region General Tests
+        #region General tests
  
         [Test]
         public void IncorrectSsnFormatThrowsException()
@@ -34,7 +36,30 @@ namespace VideoStoreTests
                 _sut.ReturnMovie("Rambo", "20000101")
             );
         }
+
+        [Test]
+        public void MovieTitleThrowsExceptionOnEmpty()
+        {
+            var movie = new Movie
+            {
+                Title = string.Empty,
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            Assert.Throws<MovieException>(() =>
+                _sut.AddMovie(movie)
+            );
+            Assert.Throws<MovieException>(() =>
+                _sut.RentMovie(string.Empty, "2000-01-01")
+            );
+            Assert.Throws<MovieException>(() =>
+                _sut.ReturnMovie(string.Empty, "2000-01-01")
+            );
+        }
+
         #endregion
+        #region Register customer
 
         [Test]
         public void CanRegisterNewCustomer()
@@ -54,5 +79,6 @@ namespace VideoStoreTests
                 _sut.RegisterCustomer("John Doe", "2000-01-01")
             );
         }
+        #endregion
     }
 }
