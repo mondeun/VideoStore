@@ -75,6 +75,9 @@ namespace VideoStore
 
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
 
+            if (!_movies.ContainsKey(movieTitle))
+                throw new MovieException("Cannot rent non existent movie");
+
             _rentals.AddRental(movieTitle, socialSecurityNumber);
         }
 
