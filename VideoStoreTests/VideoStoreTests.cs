@@ -17,7 +17,7 @@ namespace VideoStoreTests
         [SetUp]
         public void Setup()
         {
-            _rentals = Substitute.For<Rentals>();
+            _rentals = Substitute.For<IRentals>();
             _sut = new VideoStore.VideoStore(_rentals);
         }
 
@@ -65,9 +65,10 @@ namespace VideoStoreTests
         public void CanRegisterNewCustomer()
         {
             _sut.RegisterCustomer("John Doe", "2000-01-01");
-            var customer = _sut.GetCustomers().Find(x => x.Name == "John Doe");
+            var customers = _sut.GetCustomers();
 
-            Assert.AreEqual("John Doe", customer.Name);
+            Assert.AreEqual(1, customers.Count);
+            Assert.AreEqual("John Doe", customers[0].Name);
         }
 
         [Test]
@@ -78,6 +79,25 @@ namespace VideoStoreTests
             Assert.Throws<CustomerException>(() =>
                 _sut.RegisterCustomer("John Doe", "2000-01-01")
             );
+        }
+        #endregion
+        #region Add Movie
+
+        [Test]
+        public void CanAddMovie()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.AddMovie(movie);
+            var movies = _sut.GetMovies();
+
+            Assert.AreEqual(1, movies.Count);
+            Assert.Contains(movie, movies);
         }
         #endregion
     }

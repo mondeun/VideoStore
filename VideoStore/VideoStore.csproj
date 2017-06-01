@@ -43,6 +43,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\CustomerException.cs" />
     <Compile Include="Exceptions\MovieException.cs" />
+    <Compile Include="Interfaces\IDateTime.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Interfaces\IRentals.cs" />
     <Compile Include="Interfaces\IVideoStore.cs" />
