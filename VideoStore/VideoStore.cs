@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using VideoStore.Exceptions;
 using VideoStore.Interfaces;
@@ -24,7 +25,7 @@ namespace VideoStore
         {
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
 
-            if (_customers.Exists(x => x.Name == name && x.SocialSecurityNumber == socialSecurityNumber))
+            if (_customers.Exists(x => x.Name.Equals(name) && x.SocialSecurityNumber.Equals(socialSecurityNumber)))
                 throw new CustomerException("Customer already exists");
 
             _customers.Add(new Customer
@@ -36,8 +37,11 @@ namespace VideoStore
 
         public void AddMovie(Movie movie)
         {
-            if(string.IsNullOrEmpty(movie.Title))
+            if (string.IsNullOrEmpty(movie.Title))
                 throw new MovieException("Movie title is empty");
+
+            if (_movies.Count(x => x.Title.Equals(movie.Title)) >= 3)
+                throw new MovieException("Cannot add more than three of the same movie");
 
             _movies.Add(movie);
         }

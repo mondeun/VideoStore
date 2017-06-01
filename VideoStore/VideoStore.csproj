@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTime.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\CustomerException.cs" />
     <Compile Include="Exceptions\MovieException.cs" />

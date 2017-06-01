@@ -4,6 +4,6 @@ namespace VideoStore.Interfaces
 {
     public interface IDateTime
     {
-        DateTime Now();
+        System.DateTime Now();
     }
 }

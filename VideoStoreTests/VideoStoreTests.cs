@@ -1,5 +1,4 @@
-﻿using System;
-using NSubstitute;
+﻿using NSubstitute;
 using NUnit.Framework;
 using VideoStore;
 using VideoStore.Exceptions;
@@ -98,6 +97,43 @@ namespace VideoStoreTests
 
             Assert.AreEqual(1, movies.Count);
             Assert.Contains(movie, movies);
+        }
+
+        [Test]
+        public void CanAddSameMovieUpToThreeTimes()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.AddMovie(movie);
+            _sut.AddMovie(movie);
+            _sut.AddMovie(movie);
+            var movies = _sut.GetMovies();
+
+            Assert.AreEqual(3, movies.Count);
+        }
+
+        [Test]
+        public void AddingFourthOfSameMovieThrowsException()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.AddMovie(movie);
+            _sut.AddMovie(movie);
+            _sut.AddMovie(movie);
+
+            Assert.Throws<MovieException>(() =>
+                _sut.AddMovie(movie)
+            );
         }
         #endregion
     }
