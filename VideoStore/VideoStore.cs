@@ -45,19 +45,21 @@ namespace VideoStore
         /// <param name="movie">Movie to be added</param>
         public void AddMovie(Movie movie)
         {
-            if (string.IsNullOrEmpty(movie.Title))
+            var title = movie.Title;
+
+            if (string.IsNullOrEmpty(title))
                 throw new MovieException("Movie title is empty");
 
-            if (_movies.ContainsKey(movie.Title))
+            if (_movies.ContainsKey(title))
             {
-                if (_movies[movie.Title].Count(x => x.Title.Equals(movie.Title)) >= 3)
+                if (_movies[title].Count(x => x.Title.Equals(title)) >= 3)
                     throw new MovieException("Cannot add more than three of the same movie");
 
-                _movies[movie.Title].Add(movie);
+                _movies[title].Add(movie);
             }
             else
             {
-                _movies[movie.Title] = new List<Movie> {movie};
+                _movies[title] = new List<Movie> {movie};
             }
         }
 
