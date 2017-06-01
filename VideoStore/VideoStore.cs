@@ -10,7 +10,7 @@ namespace VideoStore
 {
     public class VideoStore : IVideoStore
     {
-        private IRentals _rentals;
+        private readonly IRentals _rentals;
         private readonly List<Customer> _customers;
         private readonly List<Movie> _movies;
 
@@ -52,6 +52,8 @@ namespace VideoStore
                 throw new MovieException("Movie title is empty");
 
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
+
+            _rentals.AddRental(movieTitle, socialSecurityNumber);
         }
 
         /// <summary>

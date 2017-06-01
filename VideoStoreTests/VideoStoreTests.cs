@@ -58,6 +58,7 @@ namespace VideoStoreTests
         }
 
         #endregion
+
         #region Register customer
 
         [Test]
@@ -80,6 +81,7 @@ namespace VideoStoreTests
             );
         }
         #endregion
+
         #region Add Movie
 
         [Test]
@@ -135,6 +137,27 @@ namespace VideoStoreTests
                 _sut.AddMovie(movie)
             );
         }
+        #endregion
+
+        #region Rent Movie
+
+        [Test]
+        public void CanRentMovie()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+            _sut.AddMovie(movie);
+            _sut.RentMovie("Rambo", "2000-01-01");
+
+            _rentals.Received().AddRental(Arg.Is("Rambo"), Arg.Is("2000-01-01"));
+        }
+
         #endregion
     }
 }
