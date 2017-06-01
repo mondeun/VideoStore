@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using VideoStore;
+using VideoStore.Exceptions;
 using VideoStore.Interfaces;
 
 namespace VideoStoreTests
@@ -25,6 +26,16 @@ namespace VideoStoreTests
             var customer = _sut.GetCustomers().Find(x => x.Name == "John Doe");
 
             Assert.AreEqual("John Doe", customer.Name);
+        }
+
+        [Test]
+        public void CannotRegisterSameCustomertwice()
+        {
+            _sut.RegisterCustomer("John Doe", "1234567890");
+
+            Assert.Throws<CustomerException>(() =>
+                _sut.RegisterCustomer("John Doe", "1234567890")
+            );
         }
     }
 }

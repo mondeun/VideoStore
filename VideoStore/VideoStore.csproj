@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\CustomerException.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Interfaces\IRentals.cs" />
     <Compile Include="Interfaces\IVideoStore.cs" />

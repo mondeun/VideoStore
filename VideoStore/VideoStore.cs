@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using VideoStore.Exceptions;
 using VideoStore.Interfaces;
 using VideoStore.Models;
 
@@ -18,6 +19,9 @@ namespace VideoStore
 
         public void RegisterCustomer(string name, string socialSecurityNumber)
         {
+            if (_customers.Exists(x => x.Name == name && x.SocialSecurityNumber == socialSecurityNumber))
+                throw new CustomerException("Customer already exists");
+
             _customers.Add(new Customer
             {
                 Name = name,
