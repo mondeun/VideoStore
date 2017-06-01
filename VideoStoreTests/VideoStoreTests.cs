@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NSubstitute;
+﻿using NSubstitute;
 using NUnit.Framework;
 using VideoStore;
 using VideoStore.Interfaces;
@@ -21,6 +16,15 @@ namespace VideoStoreTests
         {
             _rentals = Substitute.For<Rentals>();
             _sut = new VideoStore.VideoStore(_rentals);
+        }
+
+        [Test]
+        public void CanRegisterNewCustomer()
+        {
+            _sut.RegisterCustomer("John Doe", "1234567890");
+            var customer = _sut.GetCustomers().Find(x => x.Name == "John Doe");
+
+            Assert.AreEqual("John Doe", customer.Name);
         }
     }
 }

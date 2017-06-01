@@ -2,6 +2,7 @@
 {
     public class Customer
     {
-        public string SocialSecurityNumber { get; private set; }
+        public string Name { get; set; }
+        public string SocialSecurityNumber { get; set; }
     }
 }

@@ -8,35 +8,38 @@ namespace VideoStore
     public class VideoStore : IVideoStore
     {
         private IRentals _rentals;
+        private List<Customer> _customers;
 
         public VideoStore(IRentals rentals)
         {
             _rentals = rentals;
+            _customers = new List<Customer>();
         }
 
         public void RegisterCustomer(string name, string socialSecurityNumber)
         {
-            throw new NotImplementedException();
+            _customers.Add(new Customer
+            {
+                Name = name,
+                SocialSecurityNumber = socialSecurityNumber
+            });
         }
 
         public void AddMovie(Movie movie)
         {
-            throw new NotImplementedException();
         }
 
         public void RentMovie(string movieTitle, string socialSecurityNumber)
         {
-            throw new NotImplementedException();
         }
 
         public List<Customer> GetCustomers()
         {
-            throw new NotImplementedException();
+            return _customers;
         }
 
         public void ReturnMovie(string movieTitle, string socialSecurityNumber)
         {
-            throw new NotImplementedException();
         }
     }
 }
