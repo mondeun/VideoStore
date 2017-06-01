@@ -7,6 +7,13 @@ namespace VideoStore
 {
     public class VideoStore : IVideoStore
     {
+        private IRentals _rentals;
+
+        public VideoStore(IRentals rentals)
+        {
+            _rentals = rentals;
+        }
+
         public void RegisterCustomer(string name, string socialSecurityNumber)
         {
             throw new NotImplementedException();
