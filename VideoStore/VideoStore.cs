@@ -21,6 +21,11 @@ namespace VideoStore
             _movies = new List<Movie>();
         }
 
+        /// <summary>
+        /// Add new customer to the register
+        /// </summary>
+        /// <param name="name">Customers name</param>
+        /// <param name="socialSecurityNumber">Customers social security number</param>
         public void RegisterCustomer(string name, string socialSecurityNumber)
         {
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
@@ -35,6 +40,10 @@ namespace VideoStore
             });
         }
 
+        /// <summary>
+        /// Add movie to stock
+        /// </summary>
+        /// <param name="movie">Movie to be added</param>
         public void AddMovie(Movie movie)
         {
             if (string.IsNullOrEmpty(movie.Title))
@@ -46,6 +55,11 @@ namespace VideoStore
             _movies.Add(movie);
         }
 
+        /// <summary>
+        /// Rent out a movie to a registered customer
+        /// </summary>
+        /// <param name="movieTitle">Title of the movie</param>
+        /// <param name="socialSecurityNumber">Customers social security number</param>
         public void RentMovie(string movieTitle, string socialSecurityNumber)
         {
             if (string.IsNullOrEmpty(movieTitle))
@@ -65,6 +79,11 @@ namespace VideoStore
             return _customers;
         }
 
+        /// <summary>
+        /// Return rented movie
+        /// </summary>
+        /// <param name="movieTitle">Title of movie</param>
+        /// <param name="socialSecurityNumber">Customers social security number</param>
         public void ReturnMovie(string movieTitle, string socialSecurityNumber)
         {
             if (string.IsNullOrEmpty(movieTitle))
@@ -73,6 +92,10 @@ namespace VideoStore
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
         }
 
+        /// <summary>
+        /// Get all movies from stock
+        /// </summary>
+        /// <returns></returns>
         public List<Movie> GetMovies()
         {
             return _movies;
