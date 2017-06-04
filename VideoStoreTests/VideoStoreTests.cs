@@ -161,11 +161,31 @@ namespace VideoStoreTests
         [Test]
         public void CannotRentNonExistentMovie()
         {
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+
             var exception = Assert.Throws<MovieException>(() => 
                 _sut.RentMovie("Rambo", "2000-01-01")
             );
             Assert.AreEqual("Cannot rent non existent movie", exception.Message);
             _rentals.DidNotReceive().AddRental(Arg.Is("Rambo"), Arg.Is("2000-01-01"));
+        }
+
+        [Test]
+        public void UnregisteredCustomerCannotRentMovie()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.AddMovie(movie);
+
+            Assert.Throws<CustomerException>(() => 
+                _sut.RentMovie("Rambo", "2000-01-01")
+            );
+            _rentals.DidNotReceive().AddRental("Rambo", "2000-01-01");
         }
 
         #endregion

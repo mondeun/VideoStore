@@ -74,6 +74,8 @@ namespace VideoStore
                 throw new MovieException("Movie title is empty");
 
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
+            if (!_customers.Any(x => x.SocialSecurityNumber.Equals(socialSecurityNumber)))
+                throw new CustomerException("Unregistered customer cannot rent movies");
 
             if (!_movies.ContainsKey(movieTitle))
                 throw new MovieException("Cannot rent non existent movie");
