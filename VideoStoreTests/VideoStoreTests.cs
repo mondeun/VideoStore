@@ -72,6 +72,14 @@ namespace VideoStoreTests
         }
 
         [Test]
+        public void NameCannotBeEmpty()
+        {
+            Assert.Throws<CustomerException>(() => 
+                _sut.RegisterCustomer(string.Empty, "2000-01-01")
+            );
+        }
+
+        [Test]
         public void CannotRegisterSameCustomertwice()
         {
             _sut.RegisterCustomer("John Doe", "2000-01-01");

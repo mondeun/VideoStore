@@ -28,6 +28,9 @@ namespace VideoStore
         /// <param name="socialSecurityNumber">Customers social security number</param>
         public void RegisterCustomer(string name, string socialSecurityNumber)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new CustomerException("Customer name cannot be empty or white space");
+
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
 
             if (_customers.Exists(x => x.Name.Equals(name) && x.SocialSecurityNumber.Equals(socialSecurityNumber)))
