@@ -22,6 +22,7 @@ namespace VideoStore
 
         /// <summary>
         /// Add new customer to the register
+        /// Throws CustomerException
         /// </summary>
         /// <param name="name">Customers name</param>
         /// <param name="socialSecurityNumber">Customers social security number</param>
@@ -41,6 +42,7 @@ namespace VideoStore
 
         /// <summary>
         /// Add movie to stock
+        /// Throws MovieException
         /// </summary>
         /// <param name="movie">Movie to be added</param>
         public void AddMovie(Movie movie)
