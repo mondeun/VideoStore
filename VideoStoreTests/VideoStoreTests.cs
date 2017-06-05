@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using NUnit.Framework;
 using VideoStore;
 using VideoStore.Exceptions;
@@ -39,15 +40,13 @@ namespace VideoStoreTests
         [Test]
         public void MovieTitleThrowsExceptionOnEmpty()
         {
-            var movie = new Movie
-            {
-                Title = string.Empty,
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
             Assert.Throws<MovieException>(() =>
-                _sut.AddMovie(movie)
+                _sut.AddMovie(new Movie
+                {
+                    Title = string.Empty,
+                    Year = 1988,
+                    Genre = Genre.Action
+                })
             );
             Assert.Throws<MovieException>(() =>
                 _sut.RentMovie(string.Empty, "2000-01-01")
