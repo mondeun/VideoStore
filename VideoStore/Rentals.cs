@@ -23,9 +23,10 @@ namespace VideoStore
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
         {
-            if (GetRentalsFor(socialSecurityNumber).Any(x => x.DueDate <= _dateTime.Now()))
+            var lateRentals = GetRentalsFor(socialSecurityNumber).Where(x => x.DueDate <= _dateTime.Now()).ToList();
+            if (lateRentals.Any())
             {
-                throw new RentalException("You are late in returning the movie");
+                throw new RentalException(lateRentals);
             }
             if (GetRentalsFor(socialSecurityNumber).Count >= 3)
             {
@@ -35,11 +36,6 @@ namespace VideoStore
             {
                 throw new RentalException("You already have acopy of this movie");
             }
-            if (GetRentalsFor(socialSecurityNumber).Any(x => ))
-            {
-                
-            }
-
 
             var rental = new Rental
             {

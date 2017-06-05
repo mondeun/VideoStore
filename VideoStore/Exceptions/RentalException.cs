@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using VideoStore.Models;
 
 namespace VideoStore.Exceptions
 {
@@ -6,6 +8,11 @@ namespace VideoStore.Exceptions
     {
         public RentalException(string message) : base(message)
         {
+        }
+
+        public RentalException(List<Rental> rentals)
+        {
+            
         }
     }
 }

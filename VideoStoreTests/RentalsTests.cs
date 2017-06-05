@@ -81,9 +81,14 @@ namespace VideoStoreTests
             Assert.Throws<RentalException>(() => _sut.AddRental("Batman v superman", "2000-01-01"));
         }
 
+        [Test]
         public void CustomerCannotRentNewMoviesWithPendingReturns()
         {
-            
+            dateMock.Now().Returns(new System.DateTime(2000, 1, 1));
+            _sut.AddRental("Batman v superman", "2000-01-01");
+            dateMock.Now().Returns(new System.DateTime(2000, 1, 4));
+
+            Assert.Throws<RentalException>(() => _sut.AddRental("Rambo", "2000-01-01"));
         }
 
 
