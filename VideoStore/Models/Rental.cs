@@ -2,7 +2,9 @@
 {
     public class Rental
     {
-        public Movie Movie { get; set; }
-        public Customer Customer { get; set; }
+        public string Movie { get; set; }
+        public string Customer { get; set; }
+        public System.DateTime RentedAt { get; set; }
+        public System.DateTime DueDate => RentedAt.AddDays(3);
     }
 }
