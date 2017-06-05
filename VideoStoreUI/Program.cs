@@ -135,7 +135,24 @@ namespace VideoStoreUI
 
         private static void ReturnMovie(IVideoStore store)
         {
-            // TODO
+            Console.Write("Enter title: ");
+            var title = Console.ReadLine();
+            Console.Write("Enter social security number: ");
+            var ssn = Console.ReadLine();
+
+            try
+            {
+                store.ReturnMovie(title, ssn);
+                Console.WriteLine($"{title} received");
+            }
+            catch (SocialSecurityNumberFormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (RentalException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static void ViewMovies(IVideoStore store)
