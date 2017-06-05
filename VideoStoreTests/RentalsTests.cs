@@ -73,5 +73,19 @@ namespace VideoStoreTests
             
             Assert.Throws<RentalException>(() => _sut.AddRental("Superman", "2000-01-01"));
         }
+
+        [Test]
+        public void CustomerCannotRentSameMovie()
+        {
+            _sut.AddRental("Batman v superman", "2000-01-01");
+            Assert.Throws<RentalException>(() => _sut.AddRental("Batman v superman", "2000-01-01"));
+        }
+
+        public void CustomerCannotRentNewMoviesWithPendingReturns()
+        {
+            
+        }
+
+
     }
 }

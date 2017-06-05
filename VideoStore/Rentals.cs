@@ -12,12 +12,13 @@ namespace VideoStore
 {
     public class Rentals : IRentals
     {
-        private IDateTime _dateTime;
-        private List<Rental> rentals = new List<Rental>();
+        private readonly IDateTime _dateTime;
+        private readonly List<Rental> _rentals;
 
         public Rentals(IDateTime dateTime)
         {
             _dateTime = dateTime;
+            _rentals = new List<Rental>();
         }
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
@@ -30,6 +31,15 @@ namespace VideoStore
             {
                 throw new RentalException("You cannot rent more then 3 movies!");
             }
+            if (GetRentalsFor(socialSecurityNumber).Exists(x => x.Movie == movieTitle))
+            {
+                throw new RentalException("You already have acopy of this movie");
+            }
+            if (GetRentalsFor(socialSecurityNumber).Any(x => ))
+            {
+                
+            }
+
 
             var rental = new Rental
             {
@@ -38,7 +48,7 @@ namespace VideoStore
                 RentedAt = _dateTime.Now()
             };
 
-            rentals.Add(rental);
+            _rentals.Add(rental);
         }
 
         public void RemoveRental(string movieTitle, string socialSecurityNumber)
@@ -47,7 +57,7 @@ namespace VideoStore
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)
         {
-            return rentals.Where(r => r.Customer == socialSecurityNumber).ToList();
+            return _rentals.Where(r => r.Customer.Equals(socialSecurityNumber)).ToList();
         }
     }
 }
