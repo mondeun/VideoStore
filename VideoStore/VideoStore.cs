@@ -108,6 +108,11 @@ namespace VideoStore
                 throw new MovieException("Movie title is empty");
 
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
+
+            if (!_rentals.GetRentalsFor(socialSecurityNumber).Any(x => x.Movie.Equals(movieTitle)))
+                throw new RentalException($"{movieTitle} is not rented by {socialSecurityNumber}");
+
+            _rentals.RemoveRental(movieTitle, socialSecurityNumber);
         }
 
         /// <summary>

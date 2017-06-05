@@ -197,5 +197,47 @@ namespace VideoStoreTests
         }
 
         #endregion
+
+        #region Return Rental
+
+        [Test]
+        public void CanReturnRental()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+            _sut.AddMovie(movie);
+            _sut.RentMovie("Rambo", "2000-01-01");
+
+            _sut.ReturnMovie("Rambo", "2000-01-01");
+
+            _rentals.Received().RemoveRental("Rambo", "2000-01-01");
+            Assert.AreEqual(0, _rentals.GetRentalsFor("2000-01-01"));
+        }
+
+        [Test]
+        public void CannotReturnNonRentedMovie()
+        {
+            var movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
+
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+            _sut.AddMovie(movie);
+
+            Assert.Throws<RentalException>(() => 
+                _sut.ReturnMovie("Rambo", "2000-01-01")
+            );
+        }
+
+        #endregion
     }
 }
