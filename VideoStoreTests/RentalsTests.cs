@@ -37,7 +37,11 @@ namespace VideoStoreTests
         [Test]
         public void CanRemoveRental()
         {
-            
+            _sut.AddRental("Rambo", "2000-01-01");
+
+            _sut.RemoveRental("Rambo", "2000-01-01");
+
+            Assert.AreEqual(0, _sut.GetRentalsFor("2000-01-01"));
         }
 
         [Test]
