@@ -13,12 +13,20 @@ namespace VideoStoreTests
     {
         private IRentals _rentals;
         private VideoStore.VideoStore _sut;
+        private Movie _movie;
 
         [SetUp]
         public void Setup()
         {
             _rentals = Substitute.For<Rentals>(Substitute.For<IDateTime>());
             _sut = new VideoStore.VideoStore(_rentals);
+
+            _movie = new Movie
+            {
+                Title = "Rambo",
+                Year = 2000,
+                Genre = Genre.Action
+            };
         }
 
         #region General tests
@@ -96,33 +104,19 @@ namespace VideoStoreTests
         [Test]
         public void CanAddMovie()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
             var movies = _sut.GetMovies();
 
             Assert.AreEqual(1, movies.Count);
-            Assert.Contains(movie, movies);
+            Assert.Contains(_movie, movies);
         }
 
         [Test]
         public void CanAddSameMovieUpToThreeTimes()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
-            _sut.AddMovie(movie);
-            _sut.AddMovie(movie);
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
+            _sut.AddMovie(_movie);
+            _sut.AddMovie(_movie);
             var movies = _sut.GetMovies();
 
             Assert.AreEqual(3, movies.Count);
@@ -131,19 +125,12 @@ namespace VideoStoreTests
         [Test]
         public void AddingFourthOfSameMovieThrowsException()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
-            _sut.AddMovie(movie);
-            _sut.AddMovie(movie);
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
+            _sut.AddMovie(_movie);
+            _sut.AddMovie(_movie);
 
             Assert.Throws<MovieException>(() =>
-                _sut.AddMovie(movie)
+                _sut.AddMovie(_movie)
             );
         }
         #endregion
@@ -153,15 +140,8 @@ namespace VideoStoreTests
         [Test]
         public void CanRentMovie()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
             _sut.RegisterCustomer("John Doe", "2000-01-01");
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
             _sut.RentMovie("Rambo", "2000-01-01");
 
             _rentals.Received().AddRental(Arg.Is("Rambo"), Arg.Is("2000-01-01"));
@@ -182,19 +162,12 @@ namespace VideoStoreTests
         [Test]
         public void UnregisteredCustomerCannotRentMovie()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
 
             Assert.Throws<CustomerException>(() => 
                 _sut.RentMovie("Rambo", "2000-01-01")
             );
-            _rentals.DidNotReceive().AddRental("Rambo", "2000-01-01");
+            _rentals.DidNotReceive().AddRental(Arg.Is("Rambo"), Arg.Is("2000-01-01"));
         }
 
         #endregion
@@ -204,15 +177,8 @@ namespace VideoStoreTests
         [Test]
         public void CanReturnRental()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
             _sut.RegisterCustomer("John Doe", "2000-01-01");
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
             _sut.RentMovie("Rambo", "2000-01-01");
 
             _sut.ReturnMovie("Rambo", "2000-01-01");
@@ -224,15 +190,8 @@ namespace VideoStoreTests
         [Test]
         public void CannotReturnNonRentedMovie()
         {
-            var movie = new Movie
-            {
-                Title = "Rambo",
-                Year = 2000,
-                Genre = Genre.Action
-            };
-
             _sut.RegisterCustomer("John Doe", "2000-01-01");
-            _sut.AddMovie(movie);
+            _sut.AddMovie(_movie);
 
             Assert.Throws<RentalException>(() => 
                 _sut.ReturnMovie("Rambo", "2000-01-01")
