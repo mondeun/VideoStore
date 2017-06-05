@@ -40,6 +40,8 @@ namespace VideoStoreTests
         [Test]
         public void MovieTitleThrowsExceptionOnEmpty()
         {
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+
             Assert.Throws<MovieException>(() =>
                 _sut.AddMovie(new Movie
                 {
