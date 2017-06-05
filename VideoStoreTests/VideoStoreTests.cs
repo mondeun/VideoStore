@@ -16,7 +16,7 @@ namespace VideoStoreTests
         [SetUp]
         public void Setup()
         {
-            _rentals = Substitute.For<IRentals>();
+            _rentals = Substitute.For<Rentals>(Substitute.For<IDateTime>());
             _sut = new VideoStore.VideoStore(_rentals);
         }
 
@@ -217,7 +217,7 @@ namespace VideoStoreTests
             _sut.ReturnMovie("Rambo", "2000-01-01");
 
             _rentals.Received().RemoveRental("Rambo", "2000-01-01");
-            Assert.AreEqual(0, _rentals.GetRentalsFor("2000-01-01"));
+            Assert.AreEqual(0, _rentals.GetRentalsFor("2000-01-01").Count);
         }
 
         [Test]
