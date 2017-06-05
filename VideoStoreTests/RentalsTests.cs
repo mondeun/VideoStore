@@ -49,10 +49,29 @@ namespace VideoStoreTests
         public void GetRentalsBySocialNumber()
         {
             _sut.AddRental("Batman v superman", "2000-01-01");
-
             var result =_sut.GetRentalsFor("2000-01-01");
+            Assert.AreEqual(1 , result.Count);
+        }
 
-            Assert.AreEqual(1 , result);
+        [Test]
+        public void CanRentManyMovies()
+        {
+            _sut.AddRental("Batman v superman", "2000-01-01");
+            _sut.AddRental("Suicide Squad", "2000-01-01");
+            _sut.AddRental("Lord of the rings", "2000-01-01");
+
+            var result = _sut.GetRentalsFor("2000-01-01");
+            Assert.AreEqual(3, result.Count);
+        }
+
+        [Test]
+        public void LimitOnRentedMoviesAllowed()
+        {
+            _sut.AddRental("Batman v superman", "2000-01-01");
+            _sut.AddRental("Suicide Squad", "2000-01-01");
+            _sut.AddRental("Lord of the rings", "2000-01-01");
+            
+            Assert.Throws<RentalException>(() => _sut.AddRental("Superman", "2000-01-01"));
         }
     }
 }

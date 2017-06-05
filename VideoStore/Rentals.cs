@@ -26,6 +26,10 @@ namespace VideoStore
             {
                 throw new RentalException("You are late in returning the movie");
             }
+            if (GetRentalsFor(socialSecurityNumber).Count >= 3)
+            {
+                throw new RentalException("You cannot rent more then 3 movies!");
+            }
 
             var rental = new Rental
             {
