@@ -49,6 +49,7 @@ namespace VideoStore
 
         public void RemoveRental(string movieTitle, string socialSecurityNumber)
         {
+
         }
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)

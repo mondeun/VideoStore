@@ -35,6 +35,12 @@ namespace VideoStoreTests
         }
 
         [Test]
+        public void CanRemoveRental()
+        {
+            
+        }
+
+        [Test]
         public void CannotRentMovieWithPendingDate()
         {
             dateMock.Now().Returns(new System.DateTime(2000, 1, 1));
