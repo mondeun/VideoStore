@@ -49,7 +49,9 @@ namespace VideoStore
 
         public void RemoveRental(string movieTitle, string socialSecurityNumber)
         {
+            var toRemove = GetRentalsFor(socialSecurityNumber).FirstOrDefault(x => x.Customer == socialSecurityNumber);
 
+            _rentals.Remove(toRemove);
         }
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)

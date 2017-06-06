@@ -41,7 +41,7 @@ namespace VideoStoreTests
 
             _sut.RemoveRental("Rambo", "2000-01-01");
 
-            Assert.AreEqual(0, _sut.GetRentalsFor("2000-01-01"));
+            Assert.AreEqual(0, _sut.GetRentalsFor("2000-01-01").Count);
         }
 
         [Test]
