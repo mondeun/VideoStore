@@ -149,6 +149,10 @@ namespace VideoStoreUI
                 store.ReturnMovie(title, ssn);
                 Console.WriteLine($"{title} received");
             }
+            catch (MovieException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             catch (SocialSecurityNumberFormatException e)
             {
                 Console.WriteLine(e.Message);

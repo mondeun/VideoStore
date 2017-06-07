@@ -34,6 +34,8 @@ namespace VideoStoreTests
         [Test]
         public void IncorrectSsnFormatThrowsException()
         {
+            _sut.AddMovie(_movie);
+
             Assert.Throws<SocialSecurityNumberFormatException>(() =>
                 _sut.RegisterCustomer("John Doe", "20000101")
             );
@@ -185,6 +187,16 @@ namespace VideoStoreTests
 
             _rentals.Received().RemoveRental("Rambo", "2000-01-01");
             Assert.AreEqual(0, _rentals.GetRentalsFor("2000-01-01").Count);
+        }
+
+        [Test]
+        public void CannotReturnNonExistentMovie()
+        {
+            _sut.RegisterCustomer("John Doe", "2000-01-01");
+
+            Assert.Throws<MovieException>(() =>
+                _sut.ReturnMovie("Rambo", "2000-01-01")
+            );
         }
 
         [Test]

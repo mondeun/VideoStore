@@ -101,6 +101,9 @@ namespace VideoStore
             if (string.IsNullOrEmpty(movieTitle))
                 throw new MovieException("Movie title is empty");
 
+            if (!_movies.ContainsKey(movieTitle))
+                throw new MovieException("Cannot return non-existent movie");
+
             VerifySocialSecurityNumberFormat(socialSecurityNumber);
 
             if (!_rentals.GetRentalsFor(socialSecurityNumber).Any(x => x.Movie.Equals(movieTitle)))

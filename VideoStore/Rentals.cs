@@ -32,9 +32,9 @@ namespace VideoStore
             {
                 throw new RentalException("You cannot rent more then 3 movies!");
             }
-            if (GetRentalsFor(socialSecurityNumber).Exists(x => x.Movie == movieTitle))
+            if (GetRentalsFor(socialSecurityNumber).Exists(x => x.Movie.Equals(movieTitle)))
             {
-                throw new RentalException("You already have acopy of this movie");
+                throw new RentalException("You already have a copy of this movie");
             }
 
             var rental = new Rental
