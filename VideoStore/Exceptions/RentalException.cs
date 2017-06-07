@@ -9,10 +9,5 @@ namespace VideoStore.Exceptions
         public RentalException(string message) : base(message)
         {
         }
-
-        public RentalException(List<Rental> rentals)
-        {
-            
-        }
     }
 }

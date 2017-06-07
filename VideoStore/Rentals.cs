@@ -26,7 +26,7 @@ namespace VideoStore
             var lateRentals = GetRentalsFor(socialSecurityNumber).Where(x => x.DueDate <= _dateTime.Now()).ToList();
             if (lateRentals.Any())
             {
-                throw new RentalException(lateRentals);
+                throw new LateRentalException(lateRentals);
             }
             if (GetRentalsFor(socialSecurityNumber).Count >= 3)
             {

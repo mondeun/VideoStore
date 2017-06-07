@@ -44,6 +44,7 @@
     <Compile Include="DateTime.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\CustomerException.cs" />
+    <Compile Include="Exceptions\LateRentalException.cs" />
     <Compile Include="Exceptions\MovieException.cs" />
     <Compile Include="Exceptions\RentalException.cs" />
     <Compile Include="Interfaces\IDateTime.cs" />
