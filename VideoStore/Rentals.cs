@@ -23,7 +23,7 @@ namespace VideoStore
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
         {
-            var lateRentals = GetRentalsFor(socialSecurityNumber).Where(x => x.DueDate <= _dateTime.Now()).ToList();
+            var lateRentals = GetRentalsFor(socialSecurityNumber).Where(x => x.DueDate < _dateTime.Now()).ToList();
             if (lateRentals.Any())
             {
                 throw new LateRentalException(lateRentals);

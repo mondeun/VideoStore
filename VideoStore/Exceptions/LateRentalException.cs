@@ -19,10 +19,10 @@ namespace VideoStore.Exceptions
         private string LateRentalsTostring()
         {
             var sb = new StringBuilder();
-            sb.AppendLine("Due movies");
+            sb.AppendLine("Late Returns;");
             foreach (var rental in _rentals)
             {
-                sb.AppendLine($"{rental.Movie} - {rental.DueDate}");
+                sb.AppendLine($"Title: {rental.Movie} - Due Date: {rental.DueDate}");
             }
             return sb.ToString();
         }

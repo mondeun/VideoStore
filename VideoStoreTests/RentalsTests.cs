@@ -50,7 +50,7 @@ namespace VideoStoreTests
             dateMock.Now().Returns(new System.DateTime(2000, 1, 1));
 
             _sut.AddRental("Batman v superman", "2000-01-01");
-            dateMock.Now().Returns(new System.DateTime(2000, 1, 4));
+            dateMock.Now().Returns(new System.DateTime(2000, 1, 5));
 
             Assert.Throws<LateRentalException>(() => _sut.AddRental("Rambo", "2000-01-01"));
         }
@@ -95,12 +95,11 @@ namespace VideoStoreTests
         public void CustomerCannotRentNewMoviesWithPendingReturns()
         {
             dateMock.Now().Returns(new System.DateTime(2000, 1, 1));
-            _sut.AddRental("Batman v superman", "2000-01-01");
-            dateMock.Now().Returns(new System.DateTime(2000, 1, 4));
+            _sut.AddRental("Batman v Superman", "2000-01-01");
+            dateMock.Now().Returns(new System.DateTime(2000, 1, 5));
 
-            Assert.Throws<LateRentalException>(() => _sut.AddRental("Rambo", "2000-01-01"));
+            var e = Assert.Throws<LateRentalException>(() => _sut.AddRental("Rambo", "2000-01-01"));
+            Assert.True(e.Message.Contains("Batman v Superman"));
         }
-
-
     }
 }
