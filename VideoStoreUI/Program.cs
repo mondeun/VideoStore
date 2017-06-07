@@ -127,6 +127,10 @@ namespace VideoStoreUI
             {
                 Console.WriteLine(e.Message);
             }
+            catch (LateRentalException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             catch (RentalException e)
             {
                 Console.WriteLine(e.Message);
